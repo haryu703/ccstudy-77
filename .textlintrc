@@ -1,6 +1,12 @@
 {
   "filters": {},
   "rules": {
-    "preset-ja-technical-writing": true
+    "preset-ja-technical-writing": true,
+    "preset-ja-spacing": {
+      "ja-space-around-code": {
+        "before": false,
+        "after": false
+      }
+    }
   }
 }
