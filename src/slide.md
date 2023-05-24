@@ -59,7 +59,20 @@ P2SHの新しい形式を追加する。
 
 Bitcoin Cash上で任意のfungible tokenとnon-fungible tokenを扱えるようにする。
 
-- 今までもOP_RETURNを利用する方法でのトークン表現はあったが、CashTokenはコンセンサスで検証されるBCH初めてのトークン
+- 今までもOP_RETURNを利用する方法でのトークン表現はあったが、CashTokensはコンセンサスで検証されるBCH初めてのトークン
+
+---
+
+### CashTokensの応用
+
+コントラクトの状態をNFTで表現することで、UTXOモデルでありながら高度なコントラクトを記述できるようになる。
+
+- コントラクト間での状態の読み取り
+- コントラクトの並列実行
+  - アカウントモデルと違いトランザクションの順序はマイナーではなくユーザーが決める
+  - コントラクトの実行時に消費するUTXOがユーザー間で競合することになる
+  - 1つのコントラクトを複数のサブコントラクトに分割することで並列実行を実現する
+- <https://github.com/bitjson/jedex>
 
 ---
 
@@ -67,6 +80,7 @@ Bitcoin Cash上で任意のfungible tokenとnon-fungible tokenを扱えるよう
 
 - Transaction outputに`token`フィールドを追加する。すべてのoutputは1つのNFTと１種類のFTを含めることができる
 - Token inspection opcodesを追加する
+- 署名時のシリアライズ方法の拡張
 - `SIGHASH_UTXOS`を追加する
 - CashAddrをトークンに対応させる
 - BIP69をトークンに対応させる
@@ -139,6 +153,13 @@ Outputのフォーマットは下記のように拡張される。
 
 ---
 
+### 署名時のシリアライズ方法の拡張
+
+- トランザクションのUTXOにトークンがある場合、署名対象にトークンの情報を含めなければならない
+- 意図せずトークンの入ったUTXOを消費することが防がれる
+
+---
+
 ### SIGHASH_UTXOS
 
 署名対象に消費するUTXOを含めるための`SIGHASH_UTXOS` (`0x20`)が追加される。
@@ -168,19 +189,6 @@ BIP-0069のトランザクションのoutputをソートするアルゴリズム
 - FT送信: <https://3xpl.com/bitcoin-cash/transaction/a59f373a0fd0cc4717e4d39d81230f8e4c0f4b922ae1b562c5d066900a615941>
 - NFT発行: <https://3xpl.com/bitcoin-cash/transaction/78758fbd104c893e3b1a67a2e80694e6191d2bd09c421a7a5a825e1915e89e8f>
 - NFT Mint: <https://3xpl.com/bitcoin-cash/transaction/6cc36e975c1730c1571ae248732ee6dca2aa864d61437e9697d38c1394e5f15c>
-
----
-
-### CashTokenの応用
-
-コントラクトの状態をNFTで表現することで、UTXOモデルでありながら高度なコントラクトを記述できるようになる。
-
-- コントラクト間での状態の読み取り
-- コントラクトの並列実行
-  - アカウントモデルと違いトランザクションの順序はマイナーではなくユーザーが決める
-  - コントラクトの実行時に消費するUTXOがユーザー間で競合することになる
-  - 1つのコントラクトを複数のサブコントラクトに分割することで並列実行を実現する
-- <https://github.com/bitjson/jedex>
 
 ---
 
