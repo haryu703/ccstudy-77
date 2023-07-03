@@ -5,7 +5,7 @@
   },
   "devDependencies": {
     "@marp-team/marp-cli": "^2.1.2",
-    "textlint": "^13.0.5",
+    "textlint": "^13.3.3",
     "textlint-rule-preset-ja-technical-writing": "^7.0.0"
   },
   "dependencies": {
